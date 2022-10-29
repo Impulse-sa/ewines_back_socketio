@@ -7,6 +7,10 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
+app.get("/", (req, res) => {
+  res.status(200).json("Web Socket Server!");
+});
+
 let users = [];
 
 const addUser = (userId, socketId) => {
