@@ -5,7 +5,7 @@ const http = require("http");
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
+const io = socketio(app);
 
 app.get("/", (req, res) => {
   res.status(200).json(`Web Socket Server! ${PORT}`);
@@ -65,6 +65,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`%s listening at ${PORT}`); // eslint-disable-line no-console
+app.listen(PORT, () => {
+  console.log(`Server listening at ${PORT}`); // eslint-disable-line no-console
 });
