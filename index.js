@@ -1,12 +1,11 @@
 const express = require("express");
-const server = express();
-const PORT = process.env.PORT || 8909;
+const PORT = 8900 || process.env.PORT;
+const socketio = require("socket.io");
+const http = require("http");
 
-const io = require("socket.io")(PORT, {
-  cors: {
-    origin: "*",
-  },
-});
+const app = express();
+const server = http.createServer(app);
+const io = socketio(server);
 
 let users = [];
 
