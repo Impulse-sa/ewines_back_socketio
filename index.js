@@ -1,4 +1,8 @@
-const io = require("socket.io")(8900, {
+const express = require("express");
+const server = express();
+const PORT = process.env.PORT || 8909;
+
+const io = require("socket.io")(PORT, {
   cors: {
     origin: "*",
   },
@@ -56,4 +60,8 @@ io.on("connection", (socket) => {
     removeUser(socket.id);
     io.emit("getUsers", users);
   });
+});
+
+server.listen(PORT, () => {
+  console.log(`%s listening at ${PORT}`); // eslint-disable-line no-console
 });
