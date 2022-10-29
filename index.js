@@ -5,9 +5,9 @@ const http = require("http");
 
 const app = express();
 const cors = require("cors");
-
+app.use(cors());
 const server = http.createServer(app);
-server.use(cors());
+
 const io = socketio(server);
 
 app.get("/", (req, res) => {
