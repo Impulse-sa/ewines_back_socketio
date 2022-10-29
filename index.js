@@ -5,14 +5,15 @@ const http = require("http");
 
 const app = express();
 const cors = require("cors");
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+
 const server = http.createServer(app);
 
-const io = socketio(server);
+const io = socketio(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
 
 app.get("/", (req, res) => {
   res.status(200).json(`Web Socket Server! ${PORT}`);
