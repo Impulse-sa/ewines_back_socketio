@@ -8,7 +8,7 @@ const server = http.createServer(app);
 const io = socketio(server);
 
 app.get("/", (req, res) => {
-  res.status(200).json("Web Socket Server!");
+  res.status(200).json(`Web Socket Server! ${PORT}`);
 });
 
 let users = [];
