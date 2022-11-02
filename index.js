@@ -4,7 +4,6 @@ const socketio = require("socket.io");
 const http = require("http");
 
 const app = express();
-const cors = require("cors");
 
 const server = http.createServer(app);
 
@@ -40,17 +39,17 @@ io.on("connection", (socket) => {
   // when connect
   console.log("A user connected!");
   io.emit("welcome", "hello this is socket server!");
+
   //taker userId and socketId from user
   socket.on("addUser", (userId) => {
     addUser(userId, socket.id);
+    console.log(users);
     io.emit("getUsers", users);
   });
 
   // send and get message
   socket.on("sendMessage", ({ userId, receiverId, text }) => {
     const user = getUser(receiverId);
-    console.log(users);
-    console.log(user);
     io.to(user).emit("getMessage", {
       userId,
       text,
@@ -59,9 +58,40 @@ io.on("connection", (socket) => {
 
   socket.on("sendConversation", ({ userId, receiverId, data }) => {
     const user = getUser(receiverId);
-    console.log(data);
     io.to(user).emit("getConversation", {
       data,
+    });
+  });
+
+  // notifications
+  socket.on("sendFavorite", ({ senderName, receiverId, publicationTitle }) => {
+    const user = getUser(receiverId);
+    io.to(user).emit("getFavorite", {
+      senderName,
+      publicationTitle,
+      type: "favorite",
+    });
+  });
+
+  socket.on(
+    "sendQuestion",
+    ({ senderName, receiverId, publicationTitle, text }) => {
+      const user = getUser(receiverId);
+      io.to(user).emit("getQuestion", {
+        senderName,
+        publicationTitle,
+        text,
+        type: "question",
+      });
+    }
+  );
+
+  socket.on("sendBuy", ({ senderName, receiverId, publicationTitle }) => {
+    const user = getUser(receiverId);
+    io.to(user).emit("getBuy", {
+      senderName,
+      publicationTitle,
+      type: "buy",
     });
   });
 
