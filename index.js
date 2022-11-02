@@ -9,7 +9,7 @@ const server = http.createServer(app);
 
 const io = socketio(server, {
   cors: {
-    origin: "https://e-wine-ashen.vercel.app",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST"],
   },
 });
