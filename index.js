@@ -103,6 +103,14 @@ io.on("connection", (socket) => {
     });
   });
 
+  socket.on("receiveDelivery", ({ senderName, receiverId }) => {
+    const user = getUser(receiverId);
+    io.to(user).emit("getReceiveDelivery", {
+      senderName,
+      type: "receiveDelivery",
+    });
+  });
+
   // when disconnect
   socket.on("disconnect", () => {
     console.log("A user disconnected!");
