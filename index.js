@@ -9,7 +9,7 @@ const server = http.createServer(app);
 
 const io = socketio(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://deploy-ewine.vercel.app",
     methods: ["GET", "POST"],
   },
 });
